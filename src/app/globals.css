@@ -1,0 +1,223 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+/* Tailwind v4 class-based dark mode (matches shadcn/ui convention). */
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  /* ── Primitives — neutral ramp, hue 155 (faint green bias, not pure grey) ── */
+  --gray-50: oklch(98.5% 0.004 155);
+  --gray-100: oklch(96.5% 0.006 155);
+  --gray-200: oklch(92% 0.008 155);
+  --gray-300: oklch(85% 0.01 155);
+  --gray-400: oklch(70% 0.012 155);
+  --gray-500: oklch(56% 0.014 155);
+  --gray-600: oklch(45% 0.014 155);
+  --gray-700: oklch(35% 0.014 155);
+  --gray-800: oklch(26% 0.014 155);
+  --gray-900: oklch(18% 0.012 155);
+  --gray-950: oklch(12% 0.01 155);
+
+  /* ── Primitives — accent ramp, hue 152 (the clinical green) ── */
+  --green-50: oklch(97% 0.02 152);
+  --green-100: oklch(93% 0.045 152);
+  --green-200: oklch(87% 0.07 152);
+  --green-300: oklch(78% 0.1 152);
+  --green-400: oklch(68% 0.12 152);
+  --green-500: oklch(58% 0.13 152);
+  --green-600: oklch(48% 0.125 152);
+  --green-700: oklch(40% 0.105 152);
+  --green-800: oklch(32% 0.085 152);
+  --green-900: oklch(24% 0.06 152);
+  /* Dark-mode accent: lightened, chroma reduced ~15% so it doesn't buzz on a dark ground. */
+  --green-dark: oklch(72% 0.11 152);
+  --green-dark-strong: oklch(80% 0.1 152);
+  --green-dark-subtle: oklch(24% 0.045 152);
+
+  /* ── Primitives — status ramps, deliberately distinct hues from the accent ── */
+  --amber-100: oklch(94% 0.05 80);
+  --amber-700: oklch(45% 0.12 65);
+  --amber-dark: oklch(75% 0.13 75);
+  --amber-dark-subtle: oklch(24% 0.05 70);
+
+  --red-100: oklch(94% 0.04 25);
+  --red-700: oklch(45% 0.14 25);
+  --red-dark: oklch(72% 0.15 22);
+  --red-dark-subtle: oklch(24% 0.06 20);
+
+  --blue-100: oklch(94% 0.02 235);
+  --blue-700: oklch(42% 0.09 240);
+  --blue-dark: oklch(72% 0.1 235);
+  --blue-dark-subtle: oklch(24% 0.04 235);
+
+  /* ── Primitives — radius, shadow ── */
+  --radius: 0.5rem;
+  --shadow-xs: 0 1px 2px oklch(20% 0.01 155 / 0.06);
+  --shadow-sm: 0 4px 16px oklch(20% 0.01 155 / 0.1);
+  --shadow-dark-sm: 0 8px 28px oklch(0% 0 0 / 0.55);
+
+  /*
+   * Z-index is a documented convention, not custom tokens: Tailwind's stock
+   * z-10/20/30/40/50 utilities already cover this app's five layers —
+   * sticky header (10) < dropdown/combobox (20) < sheet backdrop (30) <
+   * dialog (40) < toast (50).
+   */
+
+  /* ── Semantics — light (default) ── */
+  --background: var(--gray-50);
+  --foreground: var(--gray-900);
+  --card: oklch(100% 0 0);
+  --card-foreground: var(--gray-900);
+  --popover: oklch(100% 0 0);
+  --popover-foreground: var(--gray-900);
+  --primary: var(--green-600);
+  --primary-foreground: oklch(100% 0 0);
+  --secondary: var(--gray-100);
+  --secondary-foreground: var(--gray-900);
+  --muted: var(--gray-100);
+  --muted-foreground: var(--gray-500);
+  --accent: var(--green-50);
+  --accent-foreground: var(--green-800);
+  --destructive: var(--red-700);
+  --destructive-foreground: oklch(100% 0 0);
+  --border: var(--gray-200);
+  --input: var(--gray-200);
+  --ring: var(--green-600);
+
+  /* Domain extensions beyond shadcn's base set. */
+  --surface-sunken: var(--gray-100);
+  --status-warning: var(--amber-700);
+  --status-warning-subtle: var(--amber-100);
+  --status-info: var(--blue-700);
+  --status-info-subtle: var(--blue-100);
+  --status-critical: var(--destructive);
+  --status-critical-subtle: var(--red-100);
+  --elevation-raised: var(--shadow-xs);
+  --elevation-overlay: var(--shadow-sm);
+}
+
+/* ── Semantics — dark, OS default ── */
+@media (prefers-color-scheme: dark) {
+  :root:not(.light) {
+    --background: var(--gray-950);
+    --foreground: var(--gray-50);
+    --card: var(--gray-900);
+    --card-foreground: var(--gray-50);
+    --popover: var(--gray-800);
+    --popover-foreground: var(--gray-50);
+    --primary: var(--green-dark);
+    --primary-foreground: var(--gray-950);
+    --secondary: var(--gray-800);
+    --secondary-foreground: var(--gray-50);
+    --muted: var(--gray-800);
+    --muted-foreground: var(--gray-400);
+    --accent: var(--green-dark-subtle);
+    --accent-foreground: var(--green-dark-strong);
+    --destructive: var(--red-dark);
+    --destructive-foreground: var(--gray-950);
+    --border: var(--gray-800);
+    --input: var(--gray-800);
+    --ring: var(--green-dark);
+
+    --surface-sunken: oklch(9% 0.008 155);
+    --status-warning: var(--amber-dark);
+    --status-warning-subtle: var(--amber-dark-subtle);
+    --status-info: var(--blue-dark);
+    --status-info-subtle: var(--blue-dark-subtle);
+    --status-critical: var(--destructive);
+    --status-critical-subtle: var(--red-dark-subtle);
+    /* Shadows barely read on a dark ground — elevation comes from the
+       border ring on --card/--popover instead. */
+    --elevation-raised: none;
+    --elevation-overlay: var(--shadow-dark-sm);
+  }
+}
+
+/* ── Semantics — dark, explicit override (wins regardless of OS setting) ── */
+:root.dark {
+  --background: var(--gray-950);
+  --foreground: var(--gray-50);
+  --card: var(--gray-900);
+  --card-foreground: var(--gray-50);
+  --popover: var(--gray-800);
+  --popover-foreground: var(--gray-50);
+  --primary: var(--green-dark);
+  --primary-foreground: var(--gray-950);
+  --secondary: var(--gray-800);
+  --secondary-foreground: var(--gray-50);
+  --muted: var(--gray-800);
+  --muted-foreground: var(--gray-400);
+  --accent: var(--green-dark-subtle);
+  --accent-foreground: var(--green-dark-strong);
+  --destructive: var(--red-dark);
+  --destructive-foreground: var(--gray-950);
+  --border: var(--gray-800);
+  --input: var(--gray-800);
+  --ring: var(--green-dark);
+
+  --surface-sunken: oklch(9% 0.008 155);
+  --status-warning: var(--amber-dark);
+  --status-warning-subtle: var(--amber-dark-subtle);
+  --status-info: var(--blue-dark);
+  --status-info-subtle: var(--blue-dark-subtle);
+  --status-critical: var(--destructive);
+  --status-critical-subtle: var(--red-dark-subtle);
+  --elevation-raised: none;
+  --elevation-overlay: var(--shadow-dark-sm);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-surface-sunken: var(--surface-sunken);
+  --color-status-warning: var(--status-warning);
+  --color-status-warning-subtle: var(--status-warning-subtle);
+  --color-status-info: var(--status-info);
+  --color-status-info-subtle: var(--status-info-subtle);
+  --color-status-critical: var(--status-critical);
+  --color-status-critical-subtle: var(--status-critical-subtle);
+
+  --shadow-raised: var(--elevation-raised);
+  --shadow-overlay: var(--elevation-overlay);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    @apply font-sans;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
