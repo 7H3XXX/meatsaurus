@@ -9,7 +9,7 @@ export function FacetGrid({ facets, lang }: { facets: Facet[]; lang: Lang }) {
         <li key={facet.id}>
           <Link
             href={`/browse/${toSlug(facet.id)}?lang=${lang}`}
-            className="group relative flex flex-col h-[stretch] gap-1.5 overflow-hidden rounded-md border border-border bg-card px-3.5 py-3 transition-colors hover:border-primary/40"
+            className="group relative flex flex-col h-full gap-1.5 overflow-hidden rounded-md border border-border bg-card px-3.5 py-3 transition-colors hover:border-primary/40"
           >
             <span
               aria-hidden
