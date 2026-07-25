@@ -43,7 +43,6 @@ States handled: loading (route-specific `loading.tsx` per segment — home/brows
 
 - **Metadata**: `metadataBase`, OpenGraph/Twitter tags in `layout.tsx`; per-page title/description via `generateMetadata` on facet and term pages; `src/lib/metadata.ts` centralizes `siteUrl` (reads `NEXT_PUBLIC_SITE_URL`, falls back to `localhost:3000`) and `langAlternates()` (hreflang — `lang` is a query param, not a route segment, so Next can't infer translations from the URL structure; each language variant self-canonicalizes rather than collapsing to one).
 - **`robots.ts`** / **`sitemap.ts`**: sitemap lists home, `/browse`, and the 12 facet pages (one cheap `/classes/roots` call) — deliberately **not** all ~1,500 term pages, which would mean holding the full catalog just to enumerate URLs; crawlers reach term pages fine via the links every facet tree and term page already carries.
-- **`icon.tsx`**: branded favicon via `next/og` `ImageResponse` (replaced the default Next.js scaffold icon).
 - **`next.config.ts`**: baseline security headers (`X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy`, `Permissions-Policy`), `poweredByHeader: false`.
 - Verified with a real `pnpm build` + `pnpm start` (not just `pnpm dev`) — this caught a real bug dev mode hides: `useSearchParams()` in the header (rendered by every page via the root layout) needs its own `<Suspense>` boundary or static prerendering of pages with no dynamic data of their own (like Next's generated `/_not-found`) fails at build time.
 
